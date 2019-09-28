@@ -3,23 +3,18 @@ version: '3'
 services:
   server:
     build: 
-      context: ./app_server
+      context: ./recieve
       dockerfile: Dockerfile1
     image: ubuntu
+    command: python3 /usr/bin/recieve.py
     ports:
       - "5000:5000"
-    volumes:
-      - .:/app_server
 
-  sender:
+  send:
     build:
-      context: ./app_server
+      context: ./send
       dockerfile: Dockerfile2
     image: ubuntu
-    ports:
-      - "5000:5000"
-    volumes:
-      - .:/app_server
-    links:
+    command: python3 /usr/bin/send.py
+    depends_on:
       - server
-
