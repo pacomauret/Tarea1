@@ -1,21 +1,22 @@
 import socket
-
-#sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-#command = "bridge test!"
-#adress= ('recieve', 5000)
-#sock.connect(('server', 5000))
-#sock.sendall(command.encode())
-#sock.close() 
   
 s = socket.socket()   
-s.connect(('server', 5000))  
+s.connect(('127.0.0.1', 5000))
   
-while True:  
-      mensaje = "quit"
-      s.sendall(mensaje.encode()) 
-      if mensaje == "quit":  
-         break  
+while True:
+
+  mensaje = "quit"
+  s.sendall(mensaje.encode())
+
+  recibido = bytes.decode(s.recv(1024))
+
+  file = open("respuesta.txt","w+")
+  file.write("Se recivio la respuesta: " + recibido + ", desde el servidor\n")
+  file.close()
+   
+  if recibido == "saliendo": 
+    break  
   
 print("adios")  
   
-s.close() 
+s.close()

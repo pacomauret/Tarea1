@@ -1,28 +1,23 @@
 import socket
-
-
-#s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-#s.bind(('server', 5000))
-#s.listen(9)
-#conn, addr = s.accept()
-#print("accepted")
-#print(bytes.decode(conn.recv(1024)))
-
-#print ("hello")
  
 s = socket.socket()   
-s.bind(('server', 5000))  
+s.bind(('127.0.0.1', 5000))  
 s.listen(1)  
 
-sc, addr = s.accept()  
+while True:
 
-while True:  
-  recibido = bytes.decode(sc.recv(1024))  
+  sc, addr = s.accept()
+  recibido = bytes.decode(sc.recv(1024))
+  file = open("log.txt","w+")
+  file.write("Se recivio el mensaje: " + recibido + ", desde la ip: " + addr[0] +"\n")
+  file.close()
+ 
   if recibido == "quit":
-     print("Recibido:", recibido)  
-     break        
-  print("Recibido:", recibido)  
-  sc.send(recibido.encode())  
+    recibido = "saliendo"
+    sc.sendall(recibido.encode())
+    break          
+  recibido = "recibido"
+  sc.sendall(recibido.encode())  
 
 print("adios") 
 
