@@ -18,14 +18,14 @@ sc, addr = s.accept()
 
 while True:
 	mensaje = "estado"
-	sc.sendall(mensaje.encode())
+	s.sendall(mensaje.encode())
 	recibido = bytes.decode(sc.recv(1024))  
 	if recibido == "ok":
 		quit="quit" 
-		sc.send(quit.encode())
+		s.send(quit.encode())
 		break        
 	print("Recibido:", recibido)  
-	sc.send(recibido.encode())  
+	s.send(recibido.encode())  
 
 print("adios") 
 

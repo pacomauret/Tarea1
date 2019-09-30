@@ -19,10 +19,10 @@ s.listen(1)
 
 while True:  
   recibido = bytes.decode(s.recv(1024))  
-  if recibido == "Estado":
+  if recibido == "estado":
      #print("Recibido:", recibido)  
      #break
-    mensaje = "OK"
+    mensaje = "ok"
     s.send(mensaje.encode()) 
   if recibido == "Quit":
   	print("jabreak")
