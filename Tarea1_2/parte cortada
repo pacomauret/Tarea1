@@ -1,0 +1,25 @@
+RUN apt-get update \
+	&& apt-get -y install iputils-ping \
+	&& apt-get -y install iproute2 \
+	&& apt-get -y install dnsutils \
+	&& apt-get -y install python3 \
+	&& apt-get -y install python3-pip \
+	&& apt-get -y install vim \
+	&& apt-get -y install sqlite3 
+
+  datanode_2:
+    build:
+      context: ./Datanode_2
+      dockerfile: Dockerfile3
+    image: ubuntu
+    command: python3 /usr/bin/datanode.py
+    depends_on:
+      - headnode
+  datanode_3:
+    build:
+      context: ./Datanode_3
+      dockerfile: Dockerfile3
+    image: ubuntu
+    command: python3 /usr/bin/datanode.py
+    depends_on:
+      - headnode

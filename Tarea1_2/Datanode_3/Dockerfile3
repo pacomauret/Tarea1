@@ -1,0 +1,4 @@
+FROM ubuntu:latest
+
+
+COPY datanode.py /usr/bin/datanode.py
