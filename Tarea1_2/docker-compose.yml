@@ -6,7 +6,7 @@ services:
       context: ./Headnode
       dockerfile: Dockerfile1
     image: ubuntu
-    command: python3 /usr/bin/recieve.py
+    command: python3 /usr/bin/headnode.py
     ports:
       - "5000:5000"
 
@@ -15,30 +15,15 @@ services:
       context: ./Cliente
       dockerfile: Dockerfile2
     image: ubuntu
-    command: python3 /usr/bin/send.py
+    command: python3 /usr/bin/cliente.py
     depends_on:
       - headnode
   datanode_1:
     build:
-      context: ./datanode_1
+      context: ./Datanode_1
       dockerfile: Dockerfile3
     image: ubuntu
-    command: python3 /usr/bin/XXX.py
+    command: python3 /usr/bin/datanode.py
     depends_on:
       - headnode
-  datanode_2:
-    build:
-      context: ./datanode_2
-      dockerfile: Dockerfile3
-    image: ubuntu
-    command: python3 /usr/bin/XXX.py
-    depends_on:
-      - headnode
-  datanode_3:
-    build:
-      context: ./datanode_3
-      dockerfile: Dockerfile3
-    image: ubuntu
-    command: python3 /usr/bin/XXX.py
-    depends_on:
-      - headnode
+
