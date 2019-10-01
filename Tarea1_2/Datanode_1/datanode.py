@@ -1,36 +1,25 @@
 import socket
-
-
-#s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-#s.bind(('server', 5000))
-#s.listen(9)
-#conn, addr = s.accept()
-#print("accepted")
-#print(bytes.decode(conn.recv(1024)))
-
-#print ("hello")
- 
-s = socket.socket()
-s.connect(('headnode', 5000)) 
-#s.bind(('headnode', 5000))  
-s.listen(1)  
-
-#sc, addr = s.accept()  
-
-while True:  
-  recibido = bytes.decode(s.recv(1024))  
-  if recibido == "estado":
-     #print("Recibido:", recibido)  
-     #break
-    mensaje = "ok"
-    s.send(mensaje.encode()) 
-  if recibido == "Quit":
-  	print("jabreak")
-  	break
-
-  #print("Recibido:", recibido)  
   
+s = socket.socket()   
+s.connect(('headnode', 5001))
+  
+while True:
+  #mensaje = input("Enter Employee Name")
+  #s.sendall(mensaje.encode())
 
-print("adios") 
-
-s.close()  
+  recibido = bytes.decode(s.recv(1024))
+  print ("recibido =",recibido)
+  if (recibido!="" and recibido !="quit"):
+    file = open("data.txt","a")
+    file.write("Se recibio el mensaje: " + recibido + ", desde el servidor\n")
+    file.close()
+  ok='guardado!'
+  s.sendall(ok.encode())
+  if (recibido=='quit'):
+    break
+  #if recibido == "saliendo": 
+  #  break  
+  
+print("adios")  
+  
+s.close()

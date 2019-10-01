@@ -1,72 +1,65 @@
-from threading import Thread 
-from socketserver import ThreadingMixIn 
 import socket
-import time
+from random import randint
 
-class ClientThread(Thread): 
+ser_cli = socket.socket()   
+ser_cli.bind(('headnode', 5000)) 
+ser_dat1 = socket.socket()   
+ser_dat1.bind(('headnode', 5001))
+ser_dat2 = socket.socket()   
+ser_dat2.bind(('headnode', 5002)) 
+ser_dat3 = socket.socket()   
+ser_dat3.bind(('headnode', 5003))  
+ser_cli.listen(1) 
+ser_dat1.listen(1)
+ser_dat2.listen(1)
+ser_dat3.listen(1)
+sc, addr = ser_cli.accept()
+sd1, addr1 = ser_dat1.accept()
+sd2, addr2 = ser_dat2.accept() 
+sd3, addr3 = ser_dat3.accept()  
+while True:
+  list_recib=['recibido1','recibido2','recibido3']
+  recibido = bytes.decode(sc.recv(1024))
+  print ("recibido = ",recibido)
+  azar=randint(1,3)
+  if (azar==1):
+    sd1.sendall(str(recibido).encode())
+    recibido1 = bytes.decode(sd1.recv(1024))
+    print ("datanode1 dijo = ",recibido1)
+    if (recibido1=="guardado!"):
+      servidor1="guardado en datanode 1 "
+      print ("lo que tiene servidor es=",servidor1)
+      sc.send(str(servidor1).encode())
+  elif (azar==2):
+    sd2.sendall(str(recibido).encode())
+    recibido2 = bytes.decode(sd2.recv(1024))
+    print ("datanode2 dijo = ",recibido2)
+    if (recibido2=="guardado!"):
+      servidor2="guardado en datanode 2 "
+      print ("lo que tiene servidor es=",servidor2)
+      sc.send(str(servidor2).encode())
 
-	def __init__(self,ip,port): 
-		Thread.__init__(self) 
-		self.ip = ip 
-		self.port = port
-		self.Datanodes = ["Datanode1","Datanode2","Datanode3"] 
-		print("[+] New server socket thread started for " + ip + ":" + str(port)) 
+  elif (azar==3):
+    sd3.sendall(str(recibido).encode())
+    recibido3 = bytes.decode(sd3.recv(1024))
+    print ("datanode3 dijo = ",recibido3)
+    if (recibido3=="guardado!"):
+      servidor3="guardado en datanode 3 "
+      print ("lo que tiene servidor es=",servidor3)
+      sc.send(str(servidor3).encode())
+  file = open("registro_server.txt","a")
+  file.write("Se guardó el mensaje: " + recibido + ", en el datanode:"+str(azar)+"\n")
+  file.close()
 
-	def run(self):
-		if(self.ip == '224.1.1.1' ): #si esque es la thread para los pingeos constantes
-			while True:
-				for i in range(1,6):
-					print(i)
-					time.sleep(1)
-				MULTICAST_TTL = 2
-				mensaje = "holiwi"
+  if recibido == "quit":
+    recibido = "saliendo"
+    sc.sendall(recibido.encode())
+    break          
+  
+  #sc.sendall(recibido.encode())   
 
+print("adios") 
 
-				sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM, socket.IPPROTO_UDP)
-				
-				sock.setsockopt(socket.IPPROTO_IP, socket.IP_MULTICAST_TTL, MULTICAST_TTL)
-
-				sock.sendto(mensaje.encode(), (self.ip, self.port))
-				try:
-					print(bytes.decode(sock.recv(1024)))
-				except sock.error:
-					print("errorcetee")
-
-				
-				
-				#sock.bind((self.ip, self.port))
-
-				
-
-
-    		
-
-#----------------------Multicast Thread---------------------------------
-MCAST_GRP = '224.1.1.1'
-MCAST_PORT = 5001
-#Thread multicast se inicia en un principio para comenzar a pingear a los datanodes
-Datanode1 = ClientThread(MCAST_GRP,MCAST_PORT) #Aqui la ip deberia ser 'servicio' y el puerto 5000
-Datanode1.start()
-#-----------------------------------------------------------------------
-
-#-------------------------Manejo cliente--------------------------------
-"""TCP_IP = '' 
-TCP_PORT = 5000 
-BUFFER_SIZE = 1024  # Usually 1024, but we need quick response
-
-Server = socket.socket(socket.AF_INET, socket.SOCK_STREAM) 
-Server.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1) 
-Server.bind((TCP_IP, TCP_PORT)) 
-
-
-#El servidor siempre debe estar escuchando en caso de una solicitud de un cliente
-while True: 
-    Server.listen(4) 
-    print("Multithreaded Python server : Waiting for connections from clients...") 
-    (conn, (ip,port)) = Server.accept() #coneccion de un cliente
-    recibido = bytes.decode(Server.recv(1024))
-    data = bytes.decode(conn.recv(2048)) 
-    print("Server received data:" + data)
-    MESSAGE = input("Multithreaded Python server : Enter Response from Server/Enter exit:")
-    conn.send(MESSAGE.encode())  # echo """
-
+sc.close()  
+ser_cli.close() 
+sd1.close() 

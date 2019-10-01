@@ -1,21 +1,26 @@
 import socket
-
-#sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-#command = "bridge test!"
-#adress= ('recieve', 5000)
-#sock.connect(('server', 5000))
-#sock.sendall(command.encode())
-#sock.close() 
   
 s = socket.socket()   
-s.connect(('server', 5000))  
+s.connect(('headnode', 5000))
+while True:
+
   
-while True:  
-      mensaje = "quit"
-      s.sendall(mensaje.encode()) 
-      if mensaje == "quit":  
-         break  
-  
+  mensaje = input("Ingrese Datos: ")
+  s.sendall(mensaje.encode())
+
+  recibido = bytes.decode(s.recv(1024))
+  print("recibido : ", recibido)
+  try:
+    servidor=str(recibido).split(" ")[3]
+    file = open("data.txt","a")
+    file.write("El mensaje se guardó en el datanode: " + servidor+"\n")
+    file.close()
+  except:
+    x=':)'
+  if recibido == "saliendo": 
+    break  
+  x=recibido
+s.close()
 print("adios")  
   
-s.close() 
+

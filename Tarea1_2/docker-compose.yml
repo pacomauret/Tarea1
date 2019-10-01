@@ -8,7 +8,7 @@ services:
     image: ubuntu
     command: python3 /usr/bin/headnode.py
     ports:
-      - "5000:5000"
+      - "5000-5003:5000-5003"
 
   cliente:
     build:
@@ -21,6 +21,22 @@ services:
   datanode_1:
     build:
       context: ./Datanode_1
+      dockerfile: Dockerfile3
+    image: ubuntu
+    command: python3 /usr/bin/datanode.py
+    depends_on:
+      - headnode
+  datanode_2:
+    build:
+      context: ./Datanode_2
+      dockerfile: Dockerfile3
+    image: ubuntu
+    command: python3 /usr/bin/datanode.py
+    depends_on:
+      - headnode
+  datanode_3:
+    build:
+      context: ./Datanode_3
       dockerfile: Dockerfile3
     image: ubuntu
     command: python3 /usr/bin/datanode.py
