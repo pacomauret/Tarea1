@@ -1,4 +1,13 @@
 FROM ubuntu:latest
 
+WORKDIR /Headnode
 
-COPY headnode.py /usr/bin/headnode.py
+RUN apt-get update \
+	&& apt-get -y install python3 \
+	&& apt-get -y install python3-pip 
+
+COPY . /Headnode
+
+ENV NAME World5
+
+CMD ["python3","headnode.py"]

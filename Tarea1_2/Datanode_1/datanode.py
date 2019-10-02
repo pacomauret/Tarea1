@@ -39,7 +39,6 @@ class ClientThread(Thread):
 
         # Receive/respond loop
         while True:
-            print('\nwaiting to receive message')
             data, address = sock.recvfrom(1024)
             mensaje = 'Datanode1'
             print('sending acknowledgement to', address)
@@ -54,7 +53,7 @@ Datanode1 = ClientThread(MCAST_GRP,MCAST_PORT) #Aqui la ip deberia ser 'servicio
 Datanode1.start()
 #-----------------------------------------------------------------------
   
-"""s = socket.socket()   
+s = socket.socket()   
 s.connect(('headnode', 5001))
   
 while True:
@@ -76,4 +75,5 @@ while True:
 print("Cerrando Datanode")  
   
 s.close()
-"""
+
+Datanode1.close()

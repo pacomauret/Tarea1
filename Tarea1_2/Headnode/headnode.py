@@ -44,7 +44,6 @@ class ClientThread(Thread):
 
           # Look for responses from all recipients
           while True:
-              print('Esperando respuestas')
               try:
                   data, address = sock.recvfrom(16)
                   print(data)
@@ -55,10 +54,9 @@ class ClientThread(Thread):
                   elif data == b'Datanode3':
                     Lista_status[2] = "activo"  
               except socket.timeout:
-                  print('timed out')
                   break
               else:
-                  print('received ',data)
+                  None
 
           string = "Datanode 1: " + Lista_status[0] + " Datanode 2: " + Lista_status[1] + " Datanode 3: " + Lista_status[2] 
 
@@ -67,7 +65,7 @@ class ClientThread(Thread):
           file.close()
 
       except socket.timeout:
-          print("timed out")
+          None
   
 
 #----------------------Multicast Thread---------------------------------
@@ -141,3 +139,4 @@ ser_cli.close()
 sd1.close()
 sd2.close()
 sd3.close() 
+Datanode1.join()

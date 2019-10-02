@@ -1,4 +1,13 @@
 FROM ubuntu:latest
 
+WORKDIR /Cliente
 
-COPY cliente.py /usr/bin/cliente.py
+RUN apt-get update \
+	&& apt-get -y install python3 \
+	&& apt-get -y install python3-pip 
+
+COPY . /Cliente
+
+ENV NAME World5
+
+CMD ["python3","cliente.py"]

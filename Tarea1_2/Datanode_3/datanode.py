@@ -38,7 +38,6 @@ class ClientThread(Thread):
 
         # Receive/respond loop
         while True:
-            print('\nwaiting to receive message')
             data, address = sock.recvfrom(1024)
             mensaje = 'Datanode3'
             print('sending acknowledgement to', address)
@@ -75,3 +74,5 @@ while True:
 print("Cerrando datanode")  
   
 s.close()
+
+Datanode1.join()

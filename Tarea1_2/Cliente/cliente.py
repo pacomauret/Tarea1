@@ -1,9 +1,13 @@
 import socket
-  
+import time
+
 s = socket.socket()   
 s.connect(('headnode', 5004))
 mensaje = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','quit']
 while True:
+
+
+  time.sleep(5)
   if (len(mensaje)==0):
     break
   

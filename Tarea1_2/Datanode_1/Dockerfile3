@@ -1,4 +1,13 @@
 FROM ubuntu:latest
 
+WORKDIR /Datanode1
 
-COPY datanode.py /usr/bin/datanode.py
+RUN apt-get update \
+	&& apt-get -y install python3 \
+	&& apt-get -y install python3-pip 
+
+COPY . /Datanode1
+
+ENV NAME World5
+
+CMD ["python3","datanode.py"]

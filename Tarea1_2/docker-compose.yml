@@ -5,8 +5,9 @@ services:
     build: 
       context: ./Headnode
       dockerfile: Dockerfile1
-    image: ubuntu
-    command: python3 /usr/bin/headnode.py
+    image: hn
+    volumes: 
+      - ./Headnode:/Headnode
     ports:
       - "5000-5004:5000-5004"
 
@@ -14,32 +15,36 @@ services:
     build:
       context: ./Cliente
       dockerfile: Dockerfile2
-    image: ubuntu
-    command: python3 /usr/bin/cliente.py
+    image: cl
+    volumes:
+      - ./Cliente:/Cliente
     depends_on:
       - headnode
   datanode_1:
     build:
       context: ./Datanode_1
       dockerfile: Dockerfile3
-    image: ubuntu
-    command: python3 /usr/bin/datanode.py
+    image: d1
+    volumes:
+      - ./Datanode_1:/Datanode1
     depends_on:
       - headnode
   datanode_2:
     build:
       context: ./Datanode_2
       dockerfile: Dockerfile3
-    image: ubuntu
-    command: python3 /usr/bin/datanode.py
+    image: d2
+    volumes:
+      - ./Datanode_2:/Datanode2
     depends_on:
       - headnode
   datanode_3:
     build:
       context: ./Datanode_3
       dockerfile: Dockerfile3
-    image: ubuntu
-    command: python3 /usr/bin/datanode.py
+    image: d3
+    volumes:
+      - ./Datanode_3:/Datanode3
     depends_on:
       - headnode
 
