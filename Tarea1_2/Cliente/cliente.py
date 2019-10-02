@@ -1,7 +1,7 @@
 import socket
   
 s = socket.socket()   
-s.connect(('headnode', 5000))
+s.connect(('headnode', 5004))
 mensaje = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','quit']
 while True:
   if (len(mensaje)==0):

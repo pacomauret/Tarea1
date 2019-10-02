@@ -20,7 +20,7 @@ class ClientThread(Thread):
       for i in range(1,6):
         print(i)
         time.sleep(1)
-      message = 'very important data'
+      message = 'Datanode return status'
       multicast_group = ('224.3.29.71', 5000)
 
       # Create the datagram socket
@@ -72,15 +72,15 @@ class ClientThread(Thread):
 
 #----------------------Multicast Thread---------------------------------
 MCAST_GRP = '224.3.29.71'
-MCAST_PORT = 5001
+MCAST_PORT = 5000
 #Thread multicast se inicia en un principio para comenzar a pingear a los datanodes
 Datanode1 = ClientThread(MCAST_GRP,MCAST_PORT) #Aqui la ip deberia ser 'servicio' y el puerto 5000
 Datanode1.start()
 #-----------------------------------------------------------------------
 
 #-------------------------Manejo cliente--------------------------------
-"""ser_cli = socket.socket()   
-ser_cli.bind(('headnode', 5000)) 
+ser_cli = socket.socket()   
+ser_cli.bind(('headnode', 5004)) 
 ser_dat1 = socket.socket()   
 ser_dat1.bind(('headnode', 5001))
 ser_dat2 = socket.socket()   
@@ -141,4 +141,3 @@ ser_cli.close()
 sd1.close()
 sd2.close()
 sd3.close() 
-"""
