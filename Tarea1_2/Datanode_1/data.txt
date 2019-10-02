@@ -1,6 +1,0 @@
-Se recibio el mensaje: b, desde el servidor
-Se recibio el mensaje: d, desde el servidor
-Se recibio el mensaje: p, desde el servidor
-Se recibio el mensaje: r, desde el servidor
-Se recibio el mensaje: t, desde el servidor
-Se recibio el mensaje: y, desde el servidor

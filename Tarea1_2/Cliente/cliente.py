@@ -2,14 +2,16 @@ import socket
   
 s = socket.socket()   
 s.connect(('headnode', 5000))
+mensaje = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','quit']
 while True:
-
+  if (len(mensaje)==0):
+    break
   
-  mensaje = input("Ingrese Datos: ")
-  s.sendall(mensaje.encode())
+  
+  s.sendall(mensaje[0].encode())
 
+  mensaje.pop(0)
   recibido = bytes.decode(s.recv(1024))
-  print("recibido : ", recibido)
   try:
     servidor=str(recibido).split(" ")[3]
     file = open("data.txt","a")
@@ -21,6 +23,6 @@ while True:
     break  
   x=recibido
 s.close()
-print("adios")  
+print("Cerrando Cliente")  
   
 

@@ -8,7 +8,6 @@ while True:
   #s.sendall(mensaje.encode())
 
   recibido = bytes.decode(s.recv(1024))
-  print ("recibido =",recibido)
   if (recibido!="" and recibido !="quit"):
     file = open("data.txt","a")
     file.write("Se recibio el mensaje: " + recibido + ", desde el servidor\n")
@@ -20,6 +19,6 @@ while True:
   #if recibido == "saliendo": 
   #  break  
   
-print("adios")  
+print("Cerrando Datanode")  
   
 s.close()

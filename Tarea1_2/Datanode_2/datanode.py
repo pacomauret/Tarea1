@@ -21,6 +21,6 @@ while True:
   #if recibido == "saliendo": 
   #  break  
   
-print("adios")  
+print("Cerrando Datanode")  
   
 s.close()
