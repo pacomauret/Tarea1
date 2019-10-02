@@ -1,7 +1,85 @@
-import socket
 from random import randint
+from threading import Thread 
+from socketserver import ThreadingMixIn 
+import socket
+import time
+import struct
+import sys
 
-ser_cli = socket.socket()   
+class ClientThread(Thread): 
+
+  def __init__(self,ip,port): 
+    Thread.__init__(self) 
+    self.ip = ip 
+    self.port = port
+    self.Datanodes = ["Datanode1","Datanode2","Datanode3"] 
+    print("[+] New server socket thread started for " + ip + ":" + str(port)) 
+
+  def run(self):
+    while True:
+      for i in range(1,6):
+        print(i)
+        time.sleep(1)
+      message = 'very important data'
+      multicast_group = ('224.3.29.71', 5000)
+
+      # Create the datagram socket
+      sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+
+      # Set a timeout so the socket does not block
+      # indefinitely when trying to receive data.
+      sock.settimeout(1)
+
+      # Set the time-to-live for messages to 1 so they do not
+      # go past the local network segment.
+      ttl = struct.pack('b', 1)
+      sock.setsockopt(socket.IPPROTO_IP, socket.IP_MULTICAST_TTL, ttl)
+      Lista_status = ["caido","caido","caido"]
+
+      try:
+
+          # Send data to the multicast group
+          print('enviando mensaje multicast... {!r}'.format(message))
+          sent = sock.sendto(message.encode(), multicast_group)
+
+          # Look for responses from all recipients
+          while True:
+              print('Esperando respuestas')
+              try:
+                  data, address = sock.recvfrom(16)
+                  print(data)
+                  if data == b'Datanode1':
+                    Lista_status[0] = "activo"
+                  elif data == b'Datanode2':
+                    Lista_status[1] = "activo"
+                  elif data == b'Datanode3':
+                    Lista_status[2] = "activo"  
+              except socket.timeout:
+                  print('timed out')
+                  break
+              else:
+                  print('received ',data)
+
+          string = "Datanode 1: " + Lista_status[0] + " Datanode 2: " + Lista_status[1] + " Datanode 3: " + Lista_status[2] 
+
+          file = open("hearbeat_server.txt","a")
+          file.write("Nodes status: " + string + "\n")
+          file.close()
+
+      except socket.timeout:
+          print("timed out")
+  
+
+#----------------------Multicast Thread---------------------------------
+MCAST_GRP = '224.3.29.71'
+MCAST_PORT = 5001
+#Thread multicast se inicia en un principio para comenzar a pingear a los datanodes
+Datanode1 = ClientThread(MCAST_GRP,MCAST_PORT) #Aqui la ip deberia ser 'servicio' y el puerto 5000
+Datanode1.start()
+#-----------------------------------------------------------------------
+
+#-------------------------Manejo cliente--------------------------------
+"""ser_cli = socket.socket()   
 ser_cli.bind(('headnode', 5000)) 
 ser_dat1 = socket.socket()   
 ser_dat1.bind(('headnode', 5001))
@@ -63,3 +141,4 @@ ser_cli.close()
 sd1.close()
 sd2.close()
 sd3.close() 
+"""
