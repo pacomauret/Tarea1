@@ -1,1 +1,9 @@
+Para correr los dockers:
+  - Abrir la consola en la carpeta Tarea1_1
+  - Sudo docker-compose build
+  - Sudo docker-compose up
+  
+Consideraciones:
 
+  - Como esta es una prueba de comunicacion entre servidor/cliente en dockers se mando solo un mensaje desde el cliente para que
+  apague el servidor.
