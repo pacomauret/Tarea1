@@ -5,6 +5,7 @@ import socket
 import time
 import struct
 import sys
+from datetime import datetime
 
 class ClientThread(Thread): 
 
@@ -60,8 +61,10 @@ class ClientThread(Thread):
 
           string = "Datanode 1: " + Lista_status[0] + " Datanode 2: " + Lista_status[1] + " Datanode 3: " + Lista_status[2] 
 
+          hora = datetime.now()
+          horita = hora.strftime("%d/%m/%Y %H:%M:%S")
           file = open("hearbeat_server.txt","a")
-          file.write("Nodes status: " + string + "\n")
+          file.write("[" + horita + "] Nodes status: " + string + "\n")
           file.close()
 
       except socket.timeout:
