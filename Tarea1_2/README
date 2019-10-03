@@ -1,0 +1,7 @@
+El sistema se construye con docker-compose build y docker-compose up
+
+Luego el sistema manda una serie mensajes hasta agotar una lista.
+
+A continuación se debe esperar al rededor de 1 min y medio hasta que solo el cliente se cierre
+
+Esto se debe a que se consideró que el servidor puede tener muchos clientes y se queda esperando otra conexión.
