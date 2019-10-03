@@ -1,5 +1,6 @@
 import socket
 import time
+from datetime import datetime
 
 s = socket.socket()   
 s.connect(('headnode', 5004))
@@ -18,8 +19,10 @@ while True:
   recibido = bytes.decode(s.recv(1024))
   try:
     servidor=str(recibido).split(" ")[3]
+    hora = datetime.now()
+    horita = hora.strftime("%d/%m/%Y %H:%M:%S")
     file = open("data.txt","a")
-    file.write("El mensaje se guardó en el datanode: " + servidor+"\n")
+    file.write("[" + horita + "] El mensaje se guardó en el datanode: " + servidor+"\n")
     file.close()
   except:
     x=':)'

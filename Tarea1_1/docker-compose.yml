@@ -5,8 +5,9 @@ services:
     build: 
       context: ./recieve
       dockerfile: Dockerfile1
-    image: ubuntu
-    command: python3 /usr/bin/recieve.py
+    image: servidor
+    volumes: 
+      - ./recieve:/Server
     ports:
       - "5000:5000"
 
@@ -14,7 +15,8 @@ services:
     build:
       context: ./send
       dockerfile: Dockerfile2
-    image: ubuntu
-    command: python3 /usr/bin/send.py
+    image: sender
+    volumes: 
+      - ./send:/Cliente
     depends_on:
       - server

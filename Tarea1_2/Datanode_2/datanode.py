@@ -4,6 +4,7 @@ import socket
 import time
 import struct
 import sys
+from datetime import datetime
 
 
 class ClientThread(Thread): 
@@ -41,7 +42,6 @@ class ClientThread(Thread):
         while True:
             data, address = sock.recvfrom(1024)
             mensaje = 'Datanode2'
-            print('sending acknowledgement to', address)
             sock.sendto(mensaje.encode(), address)
             
 
@@ -64,8 +64,10 @@ while True:
   recibido = bytes.decode(s.recv(1024))
   print ("recibido =",recibido)
   if (recibido!="" and recibido !="quit"):
+    hora = datetime.now()
+    horita = hora.strftime("%d/%m/%Y %H:%M:%S")
     file = open("data.txt","a")
-    file.write("Se recibio el mensaje: " + recibido + ", desde el servidor\n")
+    file.write("[" + horita + "] Se recibio el mensaje: " + recibido + ", desde el servidor\n")
     file.close()
   ok='guardado!'
   s.sendall(ok.encode())

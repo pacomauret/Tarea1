@@ -1,3 +1,0 @@
-Se recibio el mensaje: a, desde el servidor
-Se recibio el mensaje: g, desde el servidor
-Se recibio el mensaje: k, desde el servidor

@@ -127,8 +127,11 @@ while True:
     if (recibido3=="guardado!"):
       servidor3="guardado en datanode 3 "
       sc.send(str(servidor3).encode())
+
+  hora = datetime.now()
+  horita = hora.strftime("%d/%m/%Y %H:%M:%S")
   file = open("registro_server.txt","a")
-  file.write("Se guardó el mensaje: " + recibido + ", en el datanode:"+str(azar)+"\n")
+  file.write("[" + horita + "] Se guardó el mensaje: " + recibido + ", en el datanode:"+str(azar)+"\n")
   file.close()
 
     

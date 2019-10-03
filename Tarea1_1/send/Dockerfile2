@@ -1,11 +1,13 @@
 FROM ubuntu:latest
-RUN apt-get update \
-	&& apt-get -y install iputils-ping \
-	&& apt-get -y install iproute2 \
-	&& apt-get -y install dnsutils \
-	&& apt-get -y install python3 \
-	&& apt-get -y install python3-pip \
-	&& apt-get -y install vim \
-	&& apt-get -y install sqlite3 
 
-COPY Send.py /usr/bin/send.py
+WORKDIR /Cliente
+
+RUN apt-get update \
+	&& apt-get -y install python3 \
+	&& apt-get -y install python3-pip 
+
+COPY . /Cliente
+
+ENV NAME cliente
+
+CMD ["python3","Send.py"]

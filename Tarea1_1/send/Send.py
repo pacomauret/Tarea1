@@ -1,7 +1,8 @@
 import socket
-  
+from datetime import datetime
+ 
 s = socket.socket()   
-s.connect(('127.0.0.1', 5000))
+s.connect(('server', 5000))
   
 while True:
 
@@ -10,8 +11,10 @@ while True:
 
   recibido = bytes.decode(s.recv(1024))
 
-  file = open("respuesta.txt","w+")
-  file.write("Se recivio la respuesta: " + recibido + ", desde el servidor\n")
+  hora = datetime.now()
+  horita = hora.strftime("%d/%m/%Y %H:%M:%S")
+  file = open("respuesta.txt","a")
+  file.write("[" + horita + "] Se recivio la respuesta: " + recibido + ", desde el servidor\n")
   file.close()
    
   if recibido == "saliendo": 
